@@ -1,6 +1,10 @@
   void subscribe_scan(const sensor_msgs::msg::LaserScan::SharedPtr scan)
   {
     geometry_msgs::msg::Twist vel;
+    
+    vel.linear.x = 2.0;
+    vel.angular.z = 0.;
+    
     if (scan->ranges[0] < 0.3)
     {
       vel.linear.x = 0.;
