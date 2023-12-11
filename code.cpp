@@ -1,18 +1,19 @@
-  void subscribe_scan(const sensor_msgs::msg::LaserScan::SharedPtr scan)
+ void subscribe_scan(const sensor_msgs::msg::LaserScan::SharedPtr scan)
   {
     geometry_msgs::msg::Twist vel;
     
     vel.linear.x = 2.0;
     vel.angular.z = 0.;
     
-    if (scan->ranges[0] < 0.3)
+    if (scan->ranges[0] <0.25 || scan->ranges[10] < 0.25)
     {
       vel.linear.x = 0.;
-      vel.angular.z = 0.;
+      vel.angular.z = -2.5;
     }
+   
     else
     {
-      vel.linear.x = 0.1;
+      vel.linear.x = 0.15;
       vel.angular.z = 0.;
     }
     RCLCPP_INFO(rclcpp::get_logger("self_drive"),
