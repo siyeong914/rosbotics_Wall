@@ -1,43 +1,47 @@
-  void subscribe_scan(const sensor_msgs::msg::LaserScan::SharedPtr scan)
+ void subscribe_scan(const sensor_msgs::msg::LaserScan::SharedPtr scan)
   {
     geometry_msgs::msg::Twist vel;
 
     vel.linear.x = 0.20;
     vel.angular.z = 0.;
 
-    if (scan->ranges[0] <= 0.25 || scan->ranges[20] <= 0.25)
+    if (scan->ranges[0] <= 0.01 && scan->ranges[0] <= 0.22 || scan->ranges[20] <= 0.01 && scan->ranges[20] <= 0.22)
     {
       vel.linear.x = 0.;
       vel.angular.z = -1.6;
     }
    
-    else if(scan->ranges[30] <= 0.25 || scan->ranges[50] <=0.25)
-    {
-      vel.linear.x = 0.1;
-      vel.angular.z = -0.005;
-    }
-    else if(scan->ranges[60] <= 0.25 ||  scan->ranges[80] <= 0.25)
-    {
-      vel.linear.x = 0.1;
-      vel.angular.z = 2.0;
-    }
-    else if(scan->ranges[90] > 0.25)
+    else if(scan->ranges[30] <= 0.01 && scan->ranges[30] <= 0.22 || scan->ranges[50] <= 0.01 && scan->ranges[50] <= 0.22)
     {
       vel.linear.x = 0.;
-      vel.angular.z = 2.0;
+      vel.angular.z = -0.005;
     }
-    else if(scan->ranges[100] > 0.25 || scan->ranges[120] > 0.25)
+    else if(scan->ranges[60] <= 0.01 && scan->ranges[60] <= 0.22 || scan->ranges[80] <= 0.01 && scan->ranges[80] <= 0.22)
     {
-      vel.linear.x = 0.1;
-      vel.angular.z = 2.5;
+      vel.linear.x = 0.;
+      vel.angular.z = 0.8;
     }
-    else if(scan->ranges[130] > 0.25 || scan->ranges[150] > 0.25)
+    else if(scan->ranges[90] > 0.01 && scan->ranges[90] > 0.15)
     {
-      vel.linear.x = 0.1;
-      vel.angular.z = 4.5;
+      if (!(scan->ranges[45] > 0.1))
+      {
+        vel.linear.x = 0.;
+        vel.angular.z = 3.5;
+      }
+     
+    }
+    else if(scan->ranges[100] <= 0.01 && scan->ranges[100] <= 0.22 || scan->ranges[120] <= 0.01 && scan->ranges[120] <= 0.22)
+    {
+      vel.linear.x = 0.;
+      vel.angular.z = 1.5;
+    }
+    else if(scan->ranges[130] <= 0.01 && scan->ranges[130] <= 0.22 || scan->ranges[150] <= 0.01 && scan->ranges[150] <= 0.22)
+    {
+      vel.linear.x = 0.;
+      vel.angular.z = 1.5;
     }
     else
     {
       vel.linear.x = 0.20;
-      vel.angular.y = 0.;
+      vel.angular.z = 0.;
     }
